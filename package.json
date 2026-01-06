@@ -8,7 +8,7 @@
     "dev:react": "vite",
     "start": "cross-env NODE_ENV=development electron .",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "npm run build:react && vite preview",
     "build:react": "tsc -b && vite build",
     "build:electron": "tsc --project src/electron/tsconfig.json",
     "build:godot": "node build-godot.cjs",
