@@ -10,12 +10,11 @@ export function getPreloadPath() {
   );
 }
 
-export function getGodotPath(file: string = "index.html") {
+export function getGodotPath() {
   return path.join(
     app.getAppPath(),
     isDev() ? "." : "..",
-    "/dist-electron/godot",
-    file
+    "/dist-electron/godot"
   );
 }
 

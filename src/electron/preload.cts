@@ -12,5 +12,3 @@ const brideTable = {
 };
 
 contextBridge.exposeInMainWorld("api", brideTable);
-
-export type BridgeTable = typeof brideTable;

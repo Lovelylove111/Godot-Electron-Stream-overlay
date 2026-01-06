@@ -6,7 +6,7 @@
   "main": "dist-electron/index.js",
   "scripts": {
     "dev:react": "vite",
-    "start": "electron .",
+    "start": "cross-env NODE_ENV=development electron .",
     "lint": "eslint .",
     "preview": "vite preview",
     "build:react": "tsc -b && vite build",
@@ -14,21 +14,27 @@
     "build:godot": "node build-godot.cjs",
     "build:clean": "npm run clean && npm run build",
     "build": "npm run build:react && npm run build:electron && npm run build:godot",
-    "build:start": "npm run build && npm run dev:electron",
+    "build:start": "npm run build && npm run start",
     "clean": "node clean.cjs",
     "dist:win": "npm run build:clean && electron-builder --win --x64",
     "dist:win:nobuild": "electron-builder --win --x64"
   },
   "dependencies": {
+    "@streamerbot/client": "^1.12.2",
+    "express": "^5.2.1",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/express": "^5.0.6",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
     "@vitejs/plugin-react": "^5.1.1",
+    "cross-env": "^10.1.0",
     "electron": "^39.2.7",
     "electron-builder": "^26.0.12",
     "eslint": "^9.39.1",

@@ -40,4 +40,5 @@ async function exportGodot() {
   });
 }
 
-exportGodot()
+//Make sure to have godot in your path with the name "godot", you can create a symbolic link to rename the original executable
+exportGodot();
