@@ -1,10 +1,12 @@
 import exp from "express";
-import { getGodotPath } from "./pathResolver.js";
+import { getElectronGodotModules, getGodotPath } from "./pathResolver.js";
 import path from "path";
 import { app, ipcMain, ipcRenderer } from "electron";
 import { config_table } from "./config.js";
 import * as http from "http";
 import WebSocket, { WebSocketServer } from "ws";
+import { readdirSync } from "fs";
+import { pathToFileURL } from "url";
 
 const expressApp = exp();
 const expressAppPort = config_table.ExpressAppPort;
@@ -24,6 +26,30 @@ export function start_serving() {
   expressApp.listen(expressAppPort, () => {
     console.log(`Godot game running at ${expressAppUrl}`);
   });
+
+  const modulesDir = getElectronGodotModules();
+
+  const files = readdirSync(modulesDir).filter(
+    (file) => path.extname(file) === ".js"
+  );
+
+  console.log("importing modules");
+  (async () => {
+    for (const file of files) {
+      const fullPath = path.join(modulesDir, file);
+      const fileUrl = pathToFileURL(fullPath).href;
+
+      try {
+        console.log("importing module: " + file);
+        const module = await import(fileUrl);
+        if (typeof module.default === "function") {
+          module.default(); // Execute the default export
+        }
+      } catch (err) {
+        console.error(`Failed to load ${file}:`, err);
+      }
+    }
+  })();
 }
 
 const gModules: Partial<{

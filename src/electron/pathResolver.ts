@@ -18,6 +18,14 @@ export function getGodotPath() {
   );
 }
 
+export function getElectronGodotModules() {
+  return path.join(
+    app.getAppPath(),
+    isDev() ? "." : "..",
+    "/dist-electron/godot-modules"
+  );
+}
+
 export function getUIPath() {
   return path.join(app.getAppPath(), "/dist-react/index.html");
 }
