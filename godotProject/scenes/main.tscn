@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://kvnovhyxhgim"]
+
+[ext_resource type="Texture2D" uid="uid://bnbox1m7ae7jy" path="res://textures/dvd.png" id="1"]
+[ext_resource type="AudioStream" uid="uid://cca7324atlddv" path="res://BONK.mp3" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://bgnmidfy2agd3" path="res://scripts/logo.gd" id="5"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(33.256, 20.9452)
+
+[node name="Main" type="Node2D"]
+
+[node name="Logo" type="CharacterBody2D" parent="." node_paths=PackedStringArray("camera", "bonk_sfx")]
+position = Vector2(400, 300)
+scale = Vector2(2, 2)
+script = ExtResource("5")
+camera = NodePath("../Camera2D")
+bonk_sfx = NodePath("AudioStreamPlayer2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Logo"]
+shape = SubResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="Logo"]
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("1")
+region_enabled = true
+region_rect = Rect2(0, 0, 3500, 2167)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Logo"]
+position = Vector2(-200, -150)
+scale = Vector2(0.5, 0.5)
+stream = ExtResource("3_sugp2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-714, 543)

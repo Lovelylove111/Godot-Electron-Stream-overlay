@@ -1,0 +1,42 @@
+{
+  "name": "electron-stream-deck",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist-electron/index.js",
+  "scripts": {
+    "dev:react": "vite",
+    "start": "electron .",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "build:react": "tsc -b && vite build",
+    "build:electron": "tsc --project src/electron/tsconfig.json",
+    "build:godot": "node build-godot.cjs",
+    "build:clean": "npm run clean && npm run build",
+    "build": "npm run build:react && npm run build:electron && npm run build:godot",
+    "build:start": "npm run build && npm run dev:electron",
+    "clean": "node clean.cjs",
+    "dist:win": "npm run build:clean && electron-builder --win --x64",
+    "dist:win:nobuild": "electron-builder --win --x64"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4"
+  }
+}
