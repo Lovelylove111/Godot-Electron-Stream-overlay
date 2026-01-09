@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://kvnovhyxhgim"]
+[gd_scene load_steps=6 format=3 uid="uid://kvnovhyxhgim"]
 
 [ext_resource type="Texture2D" uid="uid://bnbox1m7ae7jy" path="res://textures/dvd.png" id="1"]
 [ext_resource type="AudioStream" uid="uid://cca7324atlddv" path="res://BONK.mp3" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://cdimx0kiv6b8b" path="res://scripts/module_master.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://bgnmidfy2agd3" path="res://scripts/logo.gd" id="5"]
 
 [sub_resource type="RectangleShape2D" id="1"]
@@ -32,3 +33,8 @@ stream = ExtResource("3_sugp2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-714, 543)
+
+[node name="ModuleMaster" type="Node" parent="."]
+script = ExtResource("4_jyhfs")
+
+[node name="GlobalTTS" type="Node" parent="ModuleMaster"]

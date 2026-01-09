@@ -1,5 +1,5 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1767643423
+::res://::1767981098
 .gut_editor_config.json::JSON::-1::1647268943::0::1::::<><><>0<>0<><>::
 .gut_editor_shortcuts.cfg::TextFile::-1::1647268943::0::1::::<><><>0<>0<><>::
 BONK.mp3::AudioStreamMP3::4915213463615739087::1767487331::1767487343::1::::<><><>0<>0<>ea361160822ade56e181d70ee3cdfb76<>res://.godot/imported/BONK.mp3-f9a94c0ca6a061a8d973d8d0a26ffad4.mp3str::
@@ -23,10 +23,12 @@ Roboto-Thin.ttf::FontFile::7164650926268238841::1647268943::1767480933::1::::<><
 Roboto-ThinItalic.ttf::FontFile::1390735226924284304::1647268943::1767480933::1::::<><><>0<>0<>2711fd1063f365b55c0b01a64d6f803e<>res://.godot/imported/Roboto-ThinItalic.ttf-71c6829fe0775175ae82bce81bcf7d06.fontdata::
 ThaleahDynamic.tres::FontFile::-1::1767480924::0::1::::<><><>0<>0<><>::res://fonts/ThaleahFat.ttf
 ThaleahFat.ttf::FontFile::1845003483062987033::1647268943::1767480933::1::::<><><>0<>0<>6dbf04abaeacaaa0cff2eb7e385f8447<>res://.godot/imported/ThaleahFat.ttf-04f42247f1d96b8e275a0a21d55054b8.fontdata::
-::res://scenes/::1767643423
-main.tscn::PackedScene::746055806161663900::1767487431::0::1::::<><><>0<>0<><>::uid://bnbox1m7ae7jy::::res://textures/dvd.png<>uid://cca7324atlddv::::res://BONK.mp3<>uid://bgnmidfy2agd3::::res://scripts/logo.gd
-::res://scripts/::1767643423
-logo.gd::GDScript::2835133713009120010::1767487428::0::1::::<>CharacterBody2D<><>0<>0<><>::
+::res://scenes/::1767983216
+main.tscn::PackedScene::746055806161663900::1767983216::0::1::::<><><>0<>0<><>::uid://bnbox1m7ae7jy::::res://textures/dvd.png<>uid://cca7324atlddv::::res://BONK.mp3<>uid://cdimx0kiv6b8b::::res://scripts/module_master.gd<>uid://bgnmidfy2agd3::::res://scripts/logo.gd
+::res://scripts/::1767982567
+logo.gd::GDScript::2835133713009120010::1767986137::0::1::::<>CharacterBody2D<><>0<>0<><>::
+ModuleBase.gd::GDScript::2266115934210108192::1767982659::0::1::::m_ModuleBase<>Node<><>0<>0<><>::
+module_master.gd::GDScript::5000693926430352559::1767987126::0::1::::WebSocketClient<>Node<><>0<>0<><>::
 ::res://textures/::1767643423
 arrow.png::CompressedTexture2D::247103897085849483::1647268943::1767480933::1::::<><><>0<>0<>9a5e1519535a93aa8657f06f52fd1e9e<>res://.godot/imported/arrow.png-9a93dc3b81791fee5532cccc8c8282ef.ctex::
 cartesian.png::CompressedTexture2D::4569730886643229108::1647268943::1767480933::1::::<><><>0<>0<>db020a1a4d145d188d7ee6eb3cda3295<>res://.godot/imported/cartesian.png-e360dd7ec2c31666086dc18dee04011d.ctex::

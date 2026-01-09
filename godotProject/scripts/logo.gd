@@ -71,7 +71,7 @@ func calc_screen_border_collision():
 		direction = reflect_y_direction(direction)
 		change_color()
 
-	print(Vector2(screen_size.x / 2, screen_size.y / 2))
+	# print(Vector2(screen_size.x / 2, screen_size.y / 2))
 	camera.position = Vector2(screen_size.x / 2, screen_size.y / 2)
 
 func reflect_x_direction(dir):

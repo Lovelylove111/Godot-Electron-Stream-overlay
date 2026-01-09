@@ -23,10 +23,47 @@ export function start_serving() {
     res.sendFile(p);
   });
 
-  expressApp.listen(expressAppPort, () => {
+  server.listen(expressAppPort, () => {
     console.log(`Godot game running at ${expressAppUrl}`);
   });
+}
 
+export const foundModules: Array<keyof gModule_mappings> = [];
+
+wss.on("connection", (ws: WebSocket) => {
+  console.log("Client connected");
+  ws.send("get?modules");
+
+  ws.once("message", (data, isBinary) => {
+    console.log("got data once: " + data + "isBinary " + isBinary);
+    const sdata = data.toString();
+    if (sdata.includes("modules?")) {
+      // Format: "modules?GlobalTTS,VIPTTS,ETCTTS"
+      const moduleString = sdata.split("modules?")[1];
+
+      if (moduleString) {
+        const modules = moduleString
+          .split(",")
+          .filter((name) => name.trim() !== "");
+
+        foundModules.push(...(modules as Array<keyof gModule_mappings>));
+
+        console.log("Found modules:", foundModules);
+      } else {
+        console.warn("No modules found in message");
+      }
+
+      importModules();
+    } else {
+      console.error(
+        "First message from Godot was not the modules, closing socket"
+      );
+      ws.close();
+    }
+  });
+});
+
+async function importModules() {
   const modulesDir = getElectronGodotModules();
 
   const files = readdirSync(modulesDir).filter(
@@ -34,52 +71,21 @@ export function start_serving() {
   );
 
   console.log("importing modules");
-  (async () => {
-    for (const file of files) {
-      const fullPath = path.join(modulesDir, file);
-      const fileUrl = pathToFileURL(fullPath).href;
 
-      try {
-        console.log("importing module: " + file);
-        const module = await import(fileUrl);
-        if (typeof module.default === "function") {
-          module.default(); // Execute the default export
-        }
-      } catch (err) {
-        console.error(`Failed to load ${file}:`, err);
+  for (const file of files) {
+    const fullPath = path.join(modulesDir, file);
+    const fileUrl = pathToFileURL(fullPath).href;
+
+    try {
+      console.log("importing module: " + file);
+      const module = await import(fileUrl);
+      if (typeof module.default === "function") {
+        module.default(); // Execute the default export
       }
+    } catch (err) {
+      console.error(`Failed to load ${file}:`, err);
     }
-  })();
-}
-
-const gModules: Partial<{
-  [K in keyof gModule_mappings]: gModule_mappings[K];
-}> = {};
-
-export function registerModule<gModule_name extends keyof gModule_mappings>(
-  moduleName: gModule_name,
-  callbacks: gModule_mappings[gModule_name]
-) {
-  console.log(`registering module ${moduleName}`);
-  gModules[moduleName] = callbacks;
-  ipcMain.handle(`get:module?${moduleName}`, () => {
-    return callbacks;
-  });
-}
-
-export const getModule: <gModule_name extends keyof gModule_mappings>(
-  moduleName: gModule_name
-) => gModule_mappings[gModule_name] | null = (moduleName) => {
-  const foundModule = gModules[moduleName];
-  if (foundModule) {
-    return foundModule;
-  } else {
-    return null;
   }
-};
-
-// wss.on("connection", (ws: WebSocket) => {
-//   console.log("Client connected");
-// });
+}
 
 export const godot_webSocket = wss;
