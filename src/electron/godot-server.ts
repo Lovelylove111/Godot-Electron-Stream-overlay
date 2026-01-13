@@ -53,7 +53,7 @@ wss.on("connection", (ws: WebSocket) => {
         console.warn("No modules found in message");
       }
 
-      importModules();
+      importModules(ws);
     } else {
       console.error(
         "First message from Godot was not the modules, closing socket"
@@ -61,9 +61,11 @@ wss.on("connection", (ws: WebSocket) => {
       ws.close();
     }
   });
+
+  ws.once("close", () => {});
 });
 
-async function importModules() {
+async function importModules(ws: WebSocket) {
   const modulesDir = getElectronGodotModules();
 
   const files = readdirSync(modulesDir).filter(
@@ -80,7 +82,7 @@ async function importModules() {
       console.log("importing module: " + file);
       const module = await import(fileUrl);
       if (typeof module.default === "function") {
-        module.default(); // Execute the default export
+        module.default(ws); // Execute the default export
       }
     } catch (err) {
       console.error(`Failed to load ${file}:`, err);

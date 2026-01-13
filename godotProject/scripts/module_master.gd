@@ -96,12 +96,24 @@ func _ready() -> void:
 					msg += ",".join(module_names)
 				print("sending modules to, msg sent: " + msg)
 				socket.send(msg)
+			else:
+				_forward_to_modules(message)
 		)
 		socket.connection_closed.connect(func():
 			get_tree().change_scene_to_file("res://scenes/main.tscn")
 		)
 	else:
 		print("url is nil")
+
+func _forward_to_modules(message: String):
+	for child in get_children():
+		if child is m_ModuleBase:
+			var nname = child.name
+			if message.begins_with(nname + "?"):
+				var data = message.split("?")
+				data.remove_at(0)
+				child.v_request(data)
+	pass
 
 func _process(delta: float) -> void:
 	if socket:
