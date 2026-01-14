@@ -83,7 +83,7 @@ class StreamerBotWrapper {
    * @param handler - Function to call when event occurs
    */
   async connect<TEvent extends StreamerbotEventName | "*">(
-    id: string,
+    id: keyof gModule_mappings,
     eventPattern: TEvent,
     handler: (
       data: TEvent extends StreamerbotEventName
@@ -143,7 +143,7 @@ class StreamerBotWrapper {
    * Connect a handler to all events
    */
   async connectAll(
-    id: string,
+    id: keyof gModule_mappings,
     handler: (data: StreamerbotEventPayload<StreamerbotEventName>) => void
   ): Promise<void> {
     return this.connect(id, "*", handler);
@@ -153,7 +153,7 @@ class StreamerBotWrapper {
    * Disconnect all handlers for a specific ID
    * @param id - Unique identifier to disconnect
    */
-  disconnect(id: string): void {
+  disconnect(id: keyof gModule_mappings): void {
     if (this.handlers.has(id)) {
       const removedCount = this.handlers.get(id)!.length;
       this.handlers.delete(id);

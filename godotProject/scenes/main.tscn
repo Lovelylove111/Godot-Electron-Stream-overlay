@@ -1,22 +1,87 @@
-[gd_scene load_steps=7 format=3 uid="uid://kvnovhyxhgim"]
+[gd_scene load_steps=11 format=3 uid="uid://kvnovhyxhgim"]
 
 [ext_resource type="Texture2D" uid="uid://bnbox1m7ae7jy" path="res://textures/dvd.png" id="1"]
 [ext_resource type="AudioStream" uid="uid://cca7324atlddv" path="res://BONK.mp3" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://cdimx0kiv6b8b" path="res://scripts/module_master.gd" id="4_jyhfs"]
-[ext_resource type="Script" uid="uid://bgnmidfy2agd3" path="res://scripts/logo.gd" id="5"]
 [ext_resource type="Script" uid="uid://cu3d21cfrlns4" path="res://scripts/modules/GlobalTTS.gd" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://c0b7jstal6kco" path="res://textures/Amongus.png" id="6_tefeu"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(33.256, 20.9452)
 
+[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
+font_size = 46
+outline_size = 72
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0.68235296, 0.21568628, 0.21568628, 1)
+shadow_offset = Vector2(36.64, 33.445)
+
+[sub_resource type="Animation" id="Animation_o6xl0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TTSHolder/Amongus:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1305, 242.00003)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TTSHolder/Message:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1359, 199)]
+}
+
+[sub_resource type="Animation" id="Animation_tefeu"]
+resource_name = "TTS apear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TTSHolder/Amongus:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1305, 242.00003), Vector2(991.0001, 246.99998)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TTSHolder/Message:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1359, 199), Vector2(155, 194)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tipki"]
+_data = {
+&"RESET": SubResource("Animation_o6xl0"),
+&"TTS apear": SubResource("Animation_tefeu")
+}
+
 [node name="Main" type="Node2D"]
 
-[node name="Logo" type="CharacterBody2D" parent="." node_paths=PackedStringArray("camera", "bonk_sfx")]
+[node name="Logo" type="CharacterBody2D" parent="."]
 position = Vector2(400, 300)
 scale = Vector2(2, 2)
-script = ExtResource("5")
-camera = NodePath("../Camera2D")
-bonk_sfx = NodePath("AudioStreamPlayer2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Logo"]
 shape = SubResource("1")
@@ -33,10 +98,49 @@ scale = Vector2(0.5, 0.5)
 stream = ExtResource("3_sugp2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-714, 543)
+position = Vector2(572, 320)
 
 [node name="ModuleMaster" type="Node" parent="."]
 script = ExtResource("4_jyhfs")
 
-[node name="GlobalTTS" type="Node" parent="ModuleMaster"]
+[node name="GlobalTTS" type="Node" parent="ModuleMaster" node_paths=PackedStringArray("ttsLabel", "ttsUsername", "ttsExitTimer", "animPlayer")]
 script = ExtResource("5_tbgi4")
+ttsLabel = NodePath("TTSHolder/Message")
+ttsUsername = NodePath("TTSHolder/Message/Username")
+ttsExitTimer = NodePath("ExitWaitTime")
+animPlayer = NodePath("AnimationPlayer")
+
+[node name="TTSHolder" type="Node2D" parent="ModuleMaster/GlobalTTS"]
+
+[node name="Amongus" type="Sprite2D" parent="ModuleMaster/GlobalTTS/TTSHolder"]
+z_index = 1
+position = Vector2(1305, 242.00003)
+rotation = 3.1415927
+scale = Vector2(0.37270704, -0.37270713)
+texture = ExtResource("6_tefeu")
+
+[node name="Message" type="Label" parent="ModuleMaster/GlobalTTS/TTSHolder"]
+offset_left = 1359.0
+offset_top = 199.0
+offset_right = 2548.9973
+offset_bottom = 930.0
+text = "Hola que tal como andan gente"
+label_settings = SubResource("LabelSettings_tefeu")
+
+[node name="Username" type="Label" parent="ModuleMaster/GlobalTTS/TTSHolder/Message"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -68.0
+offset_right = 1199.998
+offset_bottom = 663.0
+text = "AkaKamaz"
+label_settings = SubResource("LabelSettings_tefeu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ModuleMaster/GlobalTTS"]
+libraries = {
+&"": SubResource("AnimationLibrary_tipki")
+}
+speed_scale = 0.5
+
+[node name="ExitWaitTime" type="Timer" parent="ModuleMaster/GlobalTTS"]
+wait_time = 2.0

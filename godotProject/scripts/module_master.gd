@@ -77,7 +77,10 @@ class w_socket:
 
 var socket
 func _ready() -> void:
-	var url: String = JavaScriptBridge.eval("window.location.href", true)
+	if Engine.is_editor_hint():
+		return
+	var url = JavaScriptBridge.eval("window.location.href", true)
+	if not url: return ;
 	print("Game came from:", url)
 	url = url.replace("http", "ws")
 	if url:
@@ -106,15 +109,17 @@ func _ready() -> void:
 		print("url is nil")
 
 func _forward_to_modules(message: String):
+	print("forwarding message: " + message)
 	for child in get_children():
 		if child is m_ModuleBase:
 			var nname = child.name
+			print("checking child: " + nname + " for " + nname + "?")
 			if message.begins_with(nname + "?"):
-				var data = message.split("?")
-				data.remove_at(0)
-				child.v_request(data)
+				child.v_request(message)
 	pass
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
 	if socket:
 		socket.poll()

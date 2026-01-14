@@ -16,6 +16,44 @@ type gModule_mappings = {
   };
 };
 
+type YoutubeBroadcastMessage = {
+  message: string;
+  emotes: string[];
+  parts: {
+    text: string;
+  }[];
+  broadcast: {
+    id: string;
+    channelId: string;
+    liveChatId: string;
+    title: string;
+    description: string;
+    categoryId: string;
+    privacy: string;
+    publishedAt: string; // ISO date string
+    scheduledStartTime: string; // ISO date string
+    scheduledEndTime: string; // ISO date string
+    actualStartTime: string; // ISO date string
+    actualEndTime: string; // ISO date string
+    tags: string[];
+    defaultLanguage: string;
+    defaultAudioLanguage: string;
+    status: string;
+  };
+  eventId: string;
+  user: {
+    id: string;
+    url: string;
+    name: string;
+    profileImageUrl: string;
+    isOwner: boolean;
+    isModerator: boolean;
+    isSponsor: boolean;
+    isVerified: boolean;
+  };
+  publishedAt: string; // ISO date string
+};
+
 type EventPayloadMapping = {
   "module:GlobalTTS?State": GlobalTTSState;
 };
